@@ -16,8 +16,13 @@ class CreateQuestionsTable extends Migration {
             $table->id();
             $table->string('title');
             $table->text('body');
+            $table->unsignedBigInteger('user_id');
             $table->integer('votes')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
         });
     }
 
@@ -27,6 +32,9 @@ class CreateQuestionsTable extends Migration {
      * @return void
      */
     public function down() {
+        Schema::table('questions', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('questions');
     }
 }

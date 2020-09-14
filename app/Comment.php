@@ -28,5 +28,13 @@ use Illuminate\Support\Carbon;
  * @mixin Eloquent
  */
 class Comment extends Model {
-    //
+
+    protected $fillable = [
+        'body', 'user_id', 'votes', 'question_id',
+        'answer_id'
+    ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

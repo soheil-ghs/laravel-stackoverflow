@@ -16,3 +16,33 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group([
+    'as' => 'front.',
+    'namespace' => 'Client'
+], function () {
+    Route::group([
+        'middleware' => ['auth']
+    ], function () {
+        Route::group([
+            'as' => 'questions.',
+            'prefix' => 'questions'
+        ], function () {
+            Route::get('create', 'QuestionController@create')
+                ->name('create');
+            Route::post('store', 'QuestionController@store')
+                ->name('store');
+        });
+    });
+
+    Route::resource('questions', 'QuestionController')
+        ->only(['show', 'index']);
+    Route::resource('answers', 'AnswerController')
+        ->only(['store']);
+    Route::resource('comments', 'CommentController')
+        ->only(['store']);
+});

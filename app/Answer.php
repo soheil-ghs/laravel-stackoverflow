@@ -26,7 +26,21 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Answer whereUpdatedAt($value)
  * @method static Builder|Answer whereVotes($value)
  * @mixin Eloquent
+ * @property int $user_id
+ * @property-read User $user
+ * @method static Builder|Answer whereUserId($value)
  */
 class Answer extends Model {
-    //
+
+    protected $fillable = [
+        'body', 'user_id', 'votes', 'question_id'
+    ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

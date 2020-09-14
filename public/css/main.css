@@ -1,0 +1,15 @@
+.margin-auto {
+  margin: auto;
+}
+
+.comment-reply {
+  display: none;
+}
+
+#nested-comment {
+  margin-top: 10px;
+}
+
+.comment-reply {
+    margin-top: 28px;
+}
